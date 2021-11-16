@@ -1,0 +1,19 @@
+postconf: postconf.o
+	gcc -o postconf postconf.o
+	gcc -o configurar configurar.o
+
+postconf.o: postconf.c
+	gcc -c postconf.c
+	gcc -c configurar.c
+
+
+
+
+
+
+
+
+
+
+
+

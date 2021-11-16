@@ -1,0 +1,20 @@
+postrepe: postrepe.o
+	gcc -o postrepe postrepe.o
+	gcc -o confrepe confrepe.o
+
+postrepe.o: postrepe.c
+	gcc -c postrepe.c
+	gcc -c confrepe.c
+
+
+
+
+
+
+
+
+
+
+
+
+
