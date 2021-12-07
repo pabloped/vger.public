@@ -6,3 +6,4 @@ El proyecto está escrito en C, cuenta con dos funciones principales, server y r
 
 Como tarea de encontrar viejos nuevos conocimientos, lo he hecho correr en un entorno actual (Debian corriendo en WSL2), y seguiré adaptando y sumándole entornos nuevos al viejo server.
 
+
