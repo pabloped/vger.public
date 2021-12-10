@@ -1,0 +1,13 @@
+version: '3.8'
+
+
+services: 
+  
+  vger-rep:
+    extends:
+      file: docker-compose.base.yml
+      service: debian-rep
+    ports:
+      - 80:80
+      
+

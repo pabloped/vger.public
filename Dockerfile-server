@@ -1,0 +1,32 @@
+FROM debian:buster
+ARG REPOGH
+ARG FOLDERDOCS
+
+#get gcc to run makefile
+RUN apt-get update && apt-get install build-essential -y
+#get git to get repo latter
+RUN apt-get install git-all -y
+
+
+#copy server stuff
+WORKDIR /home/server
+COPY server/. /home/server/.
+
+#build server exec
+RUN /home/server/makefile
+
+# get a bootstrat template to test the server (mit license), you can set any static content that you want, 
+# you can set up multiple server with the same content or  diferent content 
+# and the repeater get all the data and send it transparent to user
+WORKDIR /home/server/docs/${FOLDERDOCS}/
+#RUN cd ${REPOGH}
+
+RUN git clone ${REPOGH} .
+
+#back to working dir 
+WORKDIR /home/server
+
+
+#if you want to up the server uncomment next
+#RUN /home/server/server
+

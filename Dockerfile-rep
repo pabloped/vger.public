@@ -1,0 +1,18 @@
+FROM debian:buster
+
+#get gcc to run makefile
+RUN apt-get update && apt-get install build-essential -y
+
+
+#copy server stuff
+WORKDIR /home/repetidor
+COPY repetidor/. /home/repetidor/.
+
+#build server exec
+RUN /home/repetidor/makefile
+
+
+
+#if you want to up the server uncomment next
+#RUN /home/repetidor/repetidor
+

@@ -1,3 +1,5 @@
+Repetidor=vger-rep
+Repetidorpuerto=80
 Puertoserver=4546
 Tiempoespera=15
 Tiempocgiespera=10
@@ -19,6 +21,4 @@ Directoriodelprograma=/home/pablo/vger.prod/server/
 Pedidoestadisticas=estadisticas.adw
 Llamadaserver=agregarunservidornuevos
 Quitarserver=quitars
-Repetidor=debian-rep
-Repetidorpuerto=80
 Repetidorpassword=repet

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+
+  debian-rep:
+    build:
+      context: .
+      dockerfile: ./Dockerfile-rep
+    image: vger-rep
+    stdin_open: true
+    tty: true
+    command: sh -c "cd /home/repetidor/ && /home/repetidor/repetidor"
+    ports:
+      - 80:80
+      
+
+  debian-server1:
+    #you can pass the server conf by params or envs vers (is comment to config in dev stg or dply)
+    #environment:
+    #  - LSTPORT=8081
+    #  - LSTHOST=debian-server2
+    build:
+      # get a bootstrat template to test the server (mit license), (is comment to config in dev stg or dply)
+      #args:
+        # REPOGH: git://github.com/StartBootstrap/startbootstrap-sb-admin-2
+        # FOLDERDOCS: test
+      context: .
+      dockerfile: ./Dockerfile-server
+    image: debian1
+    stdin_open: true
+    tty: true
+    #you can pass parameters by arg
+    #command: sh -c "cd /home/server/ && /home/server/server 8083 debian-server1"
+    command: sh -c "cd /home/server/ && /home/server/server"
+
+
+
+

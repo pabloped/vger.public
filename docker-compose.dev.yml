@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  vger-server1:
+    build:
+      args:
+        REPOGH: git://github.com/StartBootstrap/startbootstrap-sb-admin-2
+        FOLDERDOCS: test  
+    environment:
+      - LSTPORT=8081
+      - LSTHOST=vger-server1  
+    extends:
+      file: docker-compose.base.yml
+      service: debian-server1
+    image: vger-serv1
+    #first need to start repeater
+    depends_on:
+      - vger-rep
+    ports:
+      - 8081:8081
+
+  vger-server2:
+    build:
+      args:
+        REPOGH: https://github.com/dhg/Skeleton
+        FOLDERDOCS: test2
+    environment:
+      - LSTPORT=8082
+      - LSTHOST=vger-server2  
+    extends:
+      file: docker-compose.base.yml
+      service: debian-server1
+    image: vger-serv2
+    depends_on:
+      - vger-rep
+    ports:
+      - 8082:8082
+
+  #clone for redundancy
+  vger-server3:
+    build:
+      args:
+        REPOGH: git://github.com/StartBootstrap/startbootstrap-sb-admin-2
+        FOLDERDOCS: test  
+    environment:
+      - LSTPORT=8083
+      - LSTHOST=vger-server3  
+    extends:
+      file: docker-compose.base.yml
+      service: debian-server1
+    image: vger-serv3
+    depends_on:
+      - vger-rep
+    ports:
+      - 8083:8083
+
+
+  vger-rep:
+    extends:
+      file: docker-compose.base.yml
+      service: debian-rep
+    ports:
+      - 80:80
+      
