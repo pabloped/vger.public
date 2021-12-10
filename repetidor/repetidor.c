@@ -977,9 +977,23 @@ void Cargaconfiguracion(){
          stServerweb[iNumerovector].sIp=malloc(17);
       }
       if (iLecturadocs>0){
+
+         //printf("\n .iPuerto sLeerarchivocnfen 1 : %s \n",sLeerarchivocnf);
          memset(stServerweb[iNumerovector].sIp, 0, 17);
-         strncpy(stServerweb[iNumerovector].sIp,sLeerarchivocnf,15);
-         stServerweb[iNumerovector].iPuerto=atoi(sLeerarchivocnf+16);
+         
+         //get the server address and por from the line in temp config file
+         char *p= strchr(sLeerarchivocnf, ':');
+         if (p){
+            int posstr=p-sLeerarchivocnf;
+            //printf(" p : test  : %d \n",posstr);
+            strncpy(stServerweb[iNumerovector].sIp,sLeerarchivocnf,posstr);
+            stServerweb[iNumerovector].iPuerto=atoi(sLeerarchivocnf+posstr+1);
+            //printf(" .stServerweb[iNumerovector].sIp  : %s \n",stServerweb[iNumerovector].sIp);
+            //printf(" .stServerweb[iNumerovector].iPuerto  : %d \n",stServerweb[iNumerovector].iPuerto);
+         }
+       
+
+
       }
       else{
          memset(stServerweb[iNumerovector].sIp, 0, 17);
@@ -1104,6 +1118,9 @@ int PreguntarServers(char *sBuscarpedido,int iEstesocket,unsigned short iPropuer
    char *sQuitarpuerto;
    sEscribirarchivo=malloc(BUFFERSOCK);
 
+
+ printf("sProip en : %s ",sProip);
+printf(" iPropuerto en : %d ",iPropuerto);
 
    if ((iSocketserver=iSocketserver=Conectar(sProip,iPropuerto))<0){
       printf("No hay conexcion\n");

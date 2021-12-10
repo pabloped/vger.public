@@ -1522,10 +1522,14 @@ void Atenderhttp(int iAtenderestesocket){
                (!(strstr(sNombrearchivo,".JPEG")== NULL))){
                    Escribosock(iAtenderestesocket, "Content-Type: image/jpeg\n\n");
             }
+            else if ((!(strstr(sNombrearchivo,".svg")== NULL)) ||
+                    (!(strstr(sNombrearchivo,".SVG")== NULL))){
+               Escribosock(iAtenderestesocket, "Content-Type: image/svg+xml\n\n");
+            }
             else if ((!(strstr(sNombrearchivo,".gif")== NULL)) ||
                     (!(strstr(sNombrearchivo,".GIF")== NULL))){
                Escribosock(iAtenderestesocket, "Content-Type: image/gif\n\n");
-            }
+            }            
             else if ((!(strstr(sNombrearchivo,".js")== NULL)) ||
                     (!(strstr(sNombrearchivo,".JS")== NULL))){
                Escribosock(iAtenderestesocket, "content-type: text/javascript\n\n");
@@ -1988,7 +1992,10 @@ char *sLinea;
 char *sPuerto,*sMensaje;
 int iPuertoescucha;
 
-if (iCantidadar==1){
+
+
+
+if (iCantidadar==1 || iCantidadar==3){
    sNombredelserver=malloc(1500);
    sNombrewww=malloc(1500);
    sDirectorioprincipal=malloc(1500);
@@ -2012,6 +2019,22 @@ if (iCantidadar==1){
 
    /*carga de configuracion dinamica*/
    Cargaconfiguracion();
+   //ev if params was send and overdrives conf
+   if (iCantidadar==3){
+      iPuertoserver=atoi(sArgu[1]);
+      sNombredelserver=sArgu[2];
+   }
+
+   //if envvars are set overdrive
+   char *envvar_LSTPORT = "LSTPORT";
+   char *envvarLSTHOST = "LSTHOST";
+   if(getenv(envvar_LSTPORT)){
+        iPuertoserver=atoi(getenv(envvar_LSTPORT));
+    }
+   if(getenv(envvarLSTHOST)){
+        sNombredelserver=getenv(envvarLSTHOST);
+    }
+
 
    /*ip de identificacion del padre*/
    iPidpadre=getpid();
@@ -2038,8 +2061,10 @@ if (iCantidadar==1){
    atexit(Terminoexit);
 
 
-   iPuertoescucha=iPuertoserver;
 
+
+
+   iPuertoescucha=iPuertoserver;
    printf("Escuchando en puerto : %d\n",iPuertoescucha);
    printf("test");
    printf("Proceso numero : %d ",getpid());
@@ -2056,7 +2081,7 @@ if (iCantidadar==1){
    Avisorepetidor();
 
 
-   Serverweb(iPuertoescucha,"127.0.0.1");
+   Serverweb(iPuertoescucha,sNombredelserver);
    }
 else{
     printf("Cantidad de parametros erronea.");
