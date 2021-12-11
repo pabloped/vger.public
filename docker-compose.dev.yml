@@ -12,7 +12,7 @@ services:
     extends:
       file: docker-compose.base.yml
       service: debian-server1
-    image: vger-serv1
+    image: vger-serv1.dev
     #first need to start repeater
     depends_on:
       - vger-rep
@@ -30,7 +30,7 @@ services:
     extends:
       file: docker-compose.base.yml
       service: debian-server1
-    image: vger-serv2
+    image: vger-serv2.dev
     depends_on:
       - vger-rep
     ports:
@@ -48,7 +48,7 @@ services:
     extends:
       file: docker-compose.base.yml
       service: debian-server1
-    image: vger-serv3
+    image: vger-serv3.dev
     depends_on:
       - vger-rep
     ports:
